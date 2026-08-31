@@ -27,7 +27,9 @@ app.post(
   handleStripeWebhook,
 );
 
-connectDB();
+if (process.env.NODE_ENV !== "test") {
+  connectDB();
+}
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));

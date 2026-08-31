@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 let mongoServer;
 
 beforeAll(async () => {
+  process.env.STRIPE_SECRET_KEY = "dummy_test_key";
+  
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
   
@@ -16,7 +18,9 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await mongoose.disconnect();
-  await mongoServer.stop();
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
 });
 
 afterEach(async () => {
