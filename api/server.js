@@ -94,6 +94,11 @@ io.on("connection", (socket) => {
     console.log("A user disconnected", socket.id);
   });
 });
-httpServer.listen(port, () => {
-  console.log("server is running on port " + port);
-});
+
+if (process.env.NODE_ENV !== "test") {
+  httpServer.listen(port, () => {
+    console.log("server is running on port " + port);
+  });
+}
+
+export { app, httpServer, io };
